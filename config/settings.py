@@ -18,6 +18,7 @@ if RENDER_EXTERNAL_HOSTNAME:
 INSTALLED_APPS = [
     "django.contrib.auth",
     "django.contrib.contenttypes",
+    "django.contrib.staticfiles",
     "rest_framework",
     "drf_spectacular",
     "customer_api",
