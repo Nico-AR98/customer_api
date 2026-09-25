@@ -14,6 +14,17 @@ class CustomerViewSet(viewsets.ModelViewSet):
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
 
+
+    def get_queryset(self):
+        # GET /api/customers/?email=... filtra por email exacto (sin
+        # distinguir mayúsculas/minúsculas) en vez de traer todos los
+        # clientes y buscar del lado del cliente.
+        queryset = super().get_queryset()
+        email = self.request.query_params.get('email')
+        if email:
+            queryset = queryset.filter(email__iexact=email)
+        return queryset
+
     # GET /api/customers/{id}/history/
     @action(detail=True, methods=['get'], serializer_class=CustomerHistorySerializer)
     def history(self, request, pk=None):
